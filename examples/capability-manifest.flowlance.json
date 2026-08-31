@@ -1,0 +1,23 @@
+{
+  "protocol": "oos/0.1-draft",
+  "node": {
+    "id": "flowlance",
+    "name": "FlowLance",
+    "version": "0.1"
+  },
+  "provides": [
+    "actor",
+    "action"
+  ],
+  "emits": [],
+  "accepts": [],
+  "queries": [
+    "actor",
+    "action"
+  ],
+  "actions": [],
+  "extensions": {
+    "status": "compatibility-only",
+    "note": "Events and OOS action requests are intentionally not advertised yet."
+  }
+}

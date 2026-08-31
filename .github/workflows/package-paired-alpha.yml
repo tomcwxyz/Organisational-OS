@@ -1,0 +1,131 @@
+name: package-paired-alpha
+
+on:
+  push:
+    branches:
+      - package/paired-alpha
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    name: Windows paired alpha
+    runs-on: windows-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout Organisational OS
+        uses: actions/checkout@v4
+
+      - name: Checkout TOPO
+        uses: actions/checkout@v4
+        with:
+          repository: tomcwxyz/TOPO
+          ref: main
+          path: integration/TOPO
+
+      - name: Checkout RACK
+        uses: actions/checkout@v4
+        with:
+          repository: tomcwxyz/rack
+          ref: main
+          path: integration/rack
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install TOPO dependencies
+        working-directory: integration/TOPO
+        run: npm install
+
+      - name: Build TOPO Windows installer
+        working-directory: integration/TOPO/apps/desktop
+        run: npx --no-install tauri build --bundles nsis
+
+      - name: Install RACK dependencies
+        working-directory: integration/rack
+        run: pnpm install --frozen-lockfile
+
+      - name: Build RACK Windows installer
+        working-directory: integration/rack/apps/desktop
+        run: pnpm exec tauri build --bundles nsis
+
+      - name: Assemble paired test package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+
+          $topoVersion = node -p "require('./integration/TOPO/apps/desktop/src-tauri/tauri.conf.json').version"
+          $rackVersion = node -p "require('./integration/rack/apps/desktop/src-tauri/tauri.conf.json').version"
+          $topoSha = git -C integration/TOPO rev-parse HEAD
+          $rackSha = git -C integration/rack rev-parse HEAD
+          $oosSha = git rev-parse HEAD
+
+          $topoInstaller = Get-ChildItem "integration/TOPO/apps/desktop/src-tauri/target/release/bundle/nsis/*.exe" | Select-Object -First 1
+          $rackInstaller = Get-ChildItem "integration/rack/apps/desktop/src-tauri/target/release/bundle/nsis/*.exe" | Select-Object -First 1
+
+          if (-not $topoInstaller) { throw "TOPO NSIS installer was not produced." }
+          if (-not $rackInstaller) { throw "RACK NSIS installer was not produced." }
+
+          $topoName = "TOPO-$topoVersion-windows-x64-unsigned.exe"
+          $rackName = "Rack-$rackVersion-windows-x64-unsigned.exe"
+
+          Copy-Item $topoInstaller.FullName "dist/$topoName"
+          Copy-Item $rackInstaller.FullName "dist/$rackName"
+
+          @"
+          TOPO + RACK paired local alpha
+
+          Built for the first hands-on desktop interoperability test.
+
+          TOPO
+          version: $topoVersion
+          commit: $topoSha
+
+          RACK
+          version: $rackVersion
+          commit: $rackSha
+
+          Organisational OS packaging commit: $oosSha
+
+          IMPORTANT
+          These Windows installers are unsigned test builds. Windows may display a SmartScreen warning.
+          They are not production or public pilot releases.
+
+          First connection
+          1. Install and open TOPO.
+          2. In TOPO's Context preview area, choose "Allow local tools".
+          3. Install and open Rack.
+          4. Open a prompt build. Rack should find TOPO automatically.
+          5. Rack should move to "Connected" without any CLI path, database path, port, token or manual refresh.
+          6. Choose "Use TOPO memory in this prompt build" only when you want TOPO context to affect that build.
+
+          Trust boundary
+          - TOPO presence does not imply permission.
+          - TOPO sharing permission does not imply Rack will use context.
+          - Rack context use is purpose-bound and previewed.
+          - Sensitive and restricted TOPO memory must not cross this local connection.
+          "@ | Set-Content -Path dist/PAIRED-ALPHA.txt -Encoding utf8
+
+          Get-ChildItem dist/*.exe | ForEach-Object {
+            $hash = Get-FileHash $_.FullName -Algorithm SHA256
+            "$($hash.Hash.ToLower())  $($_.Name)"
+          } | Set-Content -Path dist/SHA256SUMS.txt -Encoding ascii
+
+      - name: Upload paired alpha
+        uses: actions/upload-artifact@v4
+        with:
+          name: topo-rack-paired-alpha-windows-x64
+          path: dist/*
+          if-no-files-found: error
+          retention-days: 14

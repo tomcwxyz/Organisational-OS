@@ -1,0 +1,15 @@
+{
+  "name": "@good-ship/organisational-os-spec",
+  "version": "0.1.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "description": "Draft schemas and conformance fixtures for Organisational OS",
+  "scripts": {
+    "check": "node scripts/validate-schemas.mjs",
+    "test": "npm run check"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

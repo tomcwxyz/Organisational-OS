@@ -121,10 +121,13 @@ See [RFC 0002](../rfcs/0002-memory-nodes-and-external-state.md).
 RACK should:
 
 - expose a node capability manifest;
-- represent/export Practice using the shared schema;
-- request Context from TOPO while executing a practice;
+- request Context from TOPO through a protocol-neutral ContextSource;
+- validate and normalise the returned Context Packet;
+- keep context distinct from canonical RACK practice;
 - keep execution content local unless explicitly shared;
-- emit practice/evaluation events where useful.
+- record context provenance when a snapshot is actually used.
+
+RACK should **not yet** claim a one-to-one mapping to the OOS Practice primitive. Its modules, Set-ups and shared-practice publications represent different layers. Practice granularity is now a separate semantic investigation; see [RFC 0003](../rfcs/0003-practice-granularity.md).
 
 First proof:
 

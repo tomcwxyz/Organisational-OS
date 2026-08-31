@@ -1,0 +1,30 @@
+{
+  "specversion": "0.1-draft",
+  "id": "evt_01",
+  "type": "commitment.created",
+  "source": "flowlance",
+  "subject": "commitment_follow_up",
+  "organisation": "actor_medical_justice",
+  "actor": "actor_tom",
+  "time": "2026-08-31T08:06:00Z",
+  "data": {
+    "commitment_id": "commitment_follow_up"
+  },
+  "provenance": {
+    "source_type": "application",
+    "source_id": "flowlance:commitment_follow_up",
+    "created_by": {
+      "type": "system",
+      "id": "flowlance"
+    },
+    "method": "recorded",
+    "assertion_type": "fact",
+    "confidence": "high",
+    "created_at": "2026-08-31T08:06:00Z",
+    "derived_from": [],
+    "extensions": {}
+  },
+  "correlation_id": null,
+  "causation_id": null,
+  "extensions": {}
+}

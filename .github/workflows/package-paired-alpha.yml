@@ -49,7 +49,7 @@ jobs:
 
       - name: Build TOPO Windows installer
         working-directory: integration/TOPO
-        run: npm run tauri --workspace @topo/desktop -- build --bundles nsis
+        run: npm exec --workspace @topo/desktop -- tauri build --bundles nsis
 
       - name: Install RACK dependencies
         working-directory: integration/rack
@@ -57,7 +57,7 @@ jobs:
 
       - name: Build RACK Windows installer
         working-directory: integration/rack
-        run: pnpm --filter @rack/desktop tauri build --bundles nsis
+        run: pnpm --filter @rack/desktop exec tauri build --bundles nsis
 
       - name: Assemble paired test package
         shell: pwsh

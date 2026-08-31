@@ -67,7 +67,32 @@ Current profile requirements:
 - keep the endpoint read-only unless a future capability explicitly adds stronger authority;
 - preserve the same Object/Event/Context/Action semantics as other transports.
 
-The current TOPO profile exposes Context only after the person explicitly enables **Local app access** for that TOPO session, and fixes the disclosure ceiling to ordinary + personal memory. A client cannot request elevation to sensitive/restricted memory through this endpoint. Restarting TOPO revokes the session permission.
+The current TOPO profile exposes Context only after the person explicitly enables **Allow local tools** for that TOPO session, and fixes the disclosure ceiling to ordinary + personal memory. A client cannot request elevation to sensitive/restricted memory through this endpoint. Restarting TOPO revokes the session permission.
+
+### Presence, permission and use
+
+The desktop work exposes a useful general rule for local interoperability:
+
+~~~text
+PRESENCE
+a compatible node can be discovered
+        ↓
+PERMISSION
+the providing node allows a capability
+        ↓
+USE
+the consuming node elects to use it for a stated purpose
+~~~
+
+These states must not collapse into one another.
+
+- **Presence is not permission.** A discovery record only says that a node exists and how to negotiate with it.
+- **Permission is not automatic use.** TOPO may allow local context while RACK continues to build without it.
+- **Use is purpose-bound.** RACK requests context only after the person chooses to use it and states what the context is for.
+
+A good local UX may make the transition between these states automatic to *notice*, while keeping authority explicit. In the first TOPO/RACK implementation, RACK watches for TOPO automatically; the person still grants provider-side sharing in TOPO and opts into context use in RACK.
+
+This distinction should be preserved by other local OOS transports even if their discovery or IPC mechanism differs.
 
 This is a **local application transport**, not yet the full OOS Bridge. It is deliberately small enough to replace later with named pipes, Unix-domain sockets or another native mechanism without changing Context semantics.
 
@@ -146,7 +171,7 @@ RACK desktop
   capability check
        │
        ├── if disabled: ask person to enable
-       │   Local app access in TOPO
+       │   Allow local tools in TOPO
        │
        ▼
 preview Context Packet

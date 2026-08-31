@@ -1,0 +1,39 @@
+{
+  "id": "commitment_follow_up",
+  "statement": "Follow up on the CRM proposal next week",
+  "committed_by": [
+    "actor_tom"
+  ],
+  "committed_to": [
+    "actor_medical_justice"
+  ],
+  "subject": [
+    "opportunity_crm"
+  ],
+  "created_at": "2026-08-31T08:05:00Z",
+  "due_at": "2026-09-04T16:00:00Z",
+  "status": "active",
+  "evidence": [
+    "gmail:message_123"
+  ],
+  "related_actions": [
+    "action_follow_up"
+  ],
+  "provenance": {
+    "source_type": "email",
+    "source_id": "gmail:message_123",
+    "created_by": {
+      "type": "agent",
+      "id": "attention"
+    },
+    "method": "inferred",
+    "assertion_type": "inference",
+    "confidence": "high",
+    "created_at": "2026-08-31T08:05:00Z",
+    "derived_from": [
+      "gmail:message_123"
+    ],
+    "extensions": {}
+  },
+  "extensions": {}
+}

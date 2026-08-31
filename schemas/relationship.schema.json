@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Relationship",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "from_actor": {
+      "type": "string"
+    },
+    "to_actor": {
+      "type": "string"
+    },
+    "relationship_type": {
+      "type": "string"
+    },
+    "valid_from": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "valid_until": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json"
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "from_actor",
+    "to_actor",
+    "relationship_type",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

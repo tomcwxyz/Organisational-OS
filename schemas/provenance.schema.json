@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provenance",
+  "type": "object",
+  "properties": {
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "human",
+        "email",
+        "calendar",
+        "meeting",
+        "document",
+        "dataset",
+        "web",
+        "api",
+        "application",
+        "agent",
+        "model",
+        "rule",
+        "sensor",
+        "other"
+      ]
+    },
+    "source_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_by": {
+      "$ref": "#/$defs/actorRef"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "recorded",
+        "imported",
+        "extracted",
+        "calculated",
+        "inferred",
+        "summarised",
+        "suggested",
+        "generated",
+        "confirmed",
+        "other"
+      ]
+    },
+    "assertion_type": {
+      "type": "string",
+      "enum": [
+        "fact",
+        "claim",
+        "interpretation",
+        "inference",
+        "prediction",
+        "recommendation",
+        "decision",
+        "other"
+      ]
+    },
+    "confidence": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        null
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "derived_from": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "source_type",
+    "created_by",
+    "method",
+    "assertion_type",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "actorRef": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "person",
+            "organisation",
+            "team",
+            "agent",
+            "system"
+          ]
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

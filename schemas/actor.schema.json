@@ -13,7 +13,8 @@
         "person",
         "organisation",
         "team",
-        "agent"
+        "agent",
+        "unknown"
       ]
     },
     "name": {

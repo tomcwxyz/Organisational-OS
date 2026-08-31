@@ -40,6 +40,9 @@ const fixtures = [
   ["event.commitment-created.json", "event.schema.json"],
   ["context-packet.json", "context-packet.schema.json"],
   ["capability-manifest.rack.json", "capability-manifest.schema.json"],
+  ["flowlance.actor-client.json", "actor.schema.json"],
+  ["flowlance.action-task.json", "action.schema.json"],
+  ["capability-manifest.flowlance.json", "capability-manifest.schema.json"],
 ];
 
 let failed = false;

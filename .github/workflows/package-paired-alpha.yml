@@ -48,16 +48,16 @@ jobs:
         run: npm install
 
       - name: Build TOPO Windows installer
-        working-directory: integration/TOPO
-        run: npm exec --workspace @topo/desktop -- tauri build --bundles nsis
+        working-directory: integration/TOPO/apps/desktop
+        run: npx --no-install tauri build --bundles nsis
 
       - name: Install RACK dependencies
         working-directory: integration/rack
         run: pnpm install --frozen-lockfile
 
       - name: Build RACK Windows installer
-        working-directory: integration/rack
-        run: pnpm --filter @rack/desktop exec tauri build --bundles nsis
+        working-directory: integration/rack/apps/desktop
+        run: pnpm exec tauri build --bundles nsis
 
       - name: Assemble paired test package
         shell: pwsh

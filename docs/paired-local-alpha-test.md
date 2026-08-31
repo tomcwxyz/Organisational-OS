@@ -55,7 +55,7 @@ Confirm them in TOPO.
 
 Restart TOPO before the test.
 
-In **Context preview → Local app access**, verify the state is:
+In **Context preview → Local tools**, verify the state is:
 
 ~~~text
 Off
@@ -67,13 +67,13 @@ Expected:
 
 - RACK detects that TOPO exists;
 - RACK does not claim context is available;
-- RACK tells you to enable **Local app access** in TOPO.
+- RACK tells you to enable **Allow local tools** in TOPO.
 
 This proves discovery is not permission.
 
 ## 3. Enable local sharing in TOPO
 
-In TOPO, choose **Allow local context**.
+In TOPO, choose **Allow local tools**.
 
 Expected:
 
@@ -81,13 +81,15 @@ Expected:
 - the copy explains that the maximum local sensitivity is personal;
 - the permission is explicitly session-scoped.
 
-Return to RACK and choose **Check again**.
+Return to RACK.
 
-Expected:
+Expected: RACK notices the change automatically within a few seconds and shows:
 
 ~~~text
-Available · <TOPO version>
+Connected · <TOPO version>
 ~~~
+
+No manual refresh or connection configuration should be required.
 
 ## 4. Make an explicit RACK request
 
@@ -176,14 +178,14 @@ In RACK choose **Check again**.
 Expected:
 
 - TOPO is detected but context is unavailable;
-- RACK explains that Local app access is off;
+- RACK explains that Allow local tools is off;
 - a new context request cannot be made.
 
 Restart TOPO.
 
 Expected:
 
-- Local app access is off again even if it was enabled before restart.
+- Allow local tools is off again even if it was enabled before restart.
 
 ## 9. Record qualitative findings
 

@@ -65,6 +65,7 @@ function buildTopo(topo) {
     "@topo/core",
     "@topo/store",
     "@topo/store-node",
+    "@topo/formats",
     "@topo/oos",
     "@topo/cli",
   ]) {

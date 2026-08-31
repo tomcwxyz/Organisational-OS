@@ -1,0 +1,53 @@
+{
+  "specversion": "0.1-draft",
+  "id": "ctx_01",
+  "subject": "actor_medical_justice",
+  "purpose": "qualify CRM opportunity",
+  "requested_by": "rack",
+  "objects": [
+    {
+      "type": "commitment",
+      "id": "commitment_follow_up",
+      "value": {
+        "statement": "Follow up on the CRM proposal next week",
+        "status": "active"
+      }
+    },
+    {
+      "type": "decision",
+      "id": "decision_prior_crm",
+      "value": {
+        "statement": "Keep caseworker notes separate from medico-legal reports",
+        "status": "active"
+      }
+    }
+  ],
+  "evidence_refs": [
+    "gmail:message_123"
+  ],
+  "scope": "shared",
+  "generated_at": "2026-08-31T08:10:00Z",
+  "expires_at": null,
+  "permissions": [
+    "may_summarise",
+    "may_not_republish_evidence"
+  ],
+  "provenance": {
+    "source_type": "application",
+    "source_id": "topo:context-query-01",
+    "created_by": {
+      "type": "system",
+      "id": "topo"
+    },
+    "method": "generated",
+    "assertion_type": "interpretation",
+    "confidence": "high",
+    "created_at": "2026-08-31T08:10:00Z",
+    "derived_from": [
+      "commitment_follow_up",
+      "decision_prior_crm"
+    ],
+    "extensions": {}
+  },
+  "extensions": {}
+}

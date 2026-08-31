@@ -38,26 +38,69 @@ It proves several architectural properties cheaply:
 - RACK remains authoritative for practice;
 - the transport can later be replaced without changing the semantic contract.
 
-### 3. Local native / Bridge transport
+### 3. Authenticated desktop-local endpoint
 
-The likely next local transport is a small Bridge or native IPC surface.
+Implementation evidence from TOPO and RACK now gives us a concrete first desktop transport profile without making it part of the semantic protocol.
 
-Requirements:
+While TOPO desktop is running it publishes a user-local discovery record containing:
 
-- no open public listening port by default;
-- explicit node discovery;
-- authenticated local requests;
-- capability discovery;
-- permission/consent checks;
-- request correlation;
-- bounded payloads;
-- clear failure when the target node is unavailable.
+- protocol/profile version;
+- node identity and application version;
+- a loopback-only endpoint;
+- a random per-process bearer token;
+- process/start metadata.
 
-Whether the first implementation uses loopback HTTP, Unix-domain sockets/named pipes, MCP or a Tauri/native mechanism should be decided by implementation evidence rather than embedded in the OOS specification.
+RACK validates that discovery, checks TOPO's capabilities, and requests a purpose-bound Context Packet over the loopback endpoint.
 
-### 4. Federated relay
+Current profile requirements:
 
-Cloud/local federation adds durable store-and-forward delivery.
+- bind only to `127.0.0.1`, using an ephemeral port;
+- never advertise or accept a non-loopback endpoint;
+- protect discovery credentials with user-only file permissions where the OS supports that directly;
+- authenticate every request with a high-entropy per-process token;
+- treat discovery as presence, not permission;
+- start context sharing disabled on each provider launch;
+- require explicit person-controlled consent before advertising/serving context;
+- expose capability discovery before application requests;
+- bound request/response sizes and timeouts;
+- make unavailable/stale discovery fail clearly;
+- keep the endpoint read-only unless a future capability explicitly adds stronger authority;
+- preserve the same Object/Event/Context/Action semantics as other transports.
+
+The current TOPO profile exposes Context only after the person explicitly enables **Allow local tools** for that TOPO session, and fixes the disclosure ceiling to ordinary + personal memory. A client cannot request elevation to sensitive/restricted memory through this endpoint. Restarting TOPO revokes the session permission.
+
+### Presence, permission and use
+
+The desktop work exposes a useful general rule for local interoperability:
+
+~~~text
+PRESENCE
+a compatible node can be discovered
+        ↓
+PERMISSION
+the providing node allows a capability
+        ↓
+USE
+the consuming node elects to use it for a stated purpose
+~~~
+
+These states must not collapse into one another.
+
+- **Presence is not permission.** A discovery record only says that a node exists and how to negotiate with it.
+- **Permission is not automatic use.** TOPO may allow local context while RACK continues to build without it.
+- **Use is purpose-bound.** RACK requests context only after the person chooses to use it and states what the context is for.
+
+A good local UX may make the transition between these states automatic to *notice*, while keeping authority explicit. In the first TOPO/RACK implementation, RACK watches for TOPO automatically; the person still grants provider-side sharing in TOPO and opts into context use in RACK.
+
+This distinction should be preserved by other local OOS transports even if their discovery or IPC mechanism differs.
+
+This is a **local application transport**, not yet the full OOS Bridge. It is deliberately small enough to replace later with named pipes, Unix-domain sockets or another native mechanism without changing Context semantics.
+
+### 4. Bridge + federated relay
+
+Cloud/local federation adds a Bridge plus durable store-and-forward delivery.
+
+The local Bridge has broader responsibilities than the desktop endpoint: outbound relay connection, node discovery/routing, inbox/outbox, catch-up, cursors, consent and capability negotiation.
 
 The relay should route Events and requests while knowing as little as practical about organisational content.
 
@@ -73,6 +116,20 @@ It is expected to support:
 
 The relay must not become the canonical organisational database.
 
+### 5. Transport evolution
+
+The current ladder is therefore:
+
+~~~text
+fixtures/files
+      ↓
+CLI/stdout
+      ↓
+authenticated desktop-local endpoint
+      ↓
+Bridge + relay
+~~~
+
 ## Transport is replaceable
 
 A useful test is:
@@ -81,26 +138,51 @@ A useful test is:
 
 If not, transport concerns have leaked into the organisational protocol.
 
-## First live proving path
+## Current local proving paths
+
+The cross-repository automated smoke uses the CLI transport because it is deterministic and headless:
 
 ~~~text
 TOPO local SQLite
        │
-       │ governed context resolution
        ▼
 TOPO oos context CLI
-       │
-       │ JSON Context Packet
-       ▼
-RACK command transport
        │
        ▼
 RACK ContextSource
        │
-       └── controlled execution/build integration next
+       ▼
+context-aware prompt build
 ~~~
 
-This path is intentionally local-only.
+The human-facing desktop alpha uses the authenticated local endpoint:
+
+~~~text
+TOPO desktop
+  context resolver
+       │
+       ├── user-local discovery + token
+       │
+       ▼
+127.0.0.1 ephemeral endpoint
+       │
+       ▼
+RACK desktop
+  capability check
+       │
+       ├── if disabled: ask person to enable
+       │   Allow local tools in TOPO
+       │
+       ▼
+preview Context Packet
+       │
+       ▼
+context-aware prompt build
+~~~
+
+Both paths preserve the same Context Packet and build-provenance semantics. The desktop path does not read TOPO SQLite directly and does not require the user to configure a TOPO CLI executable.
+
+These paths are intentionally local-only.
 
 The first cloud/local proof comes later:
 

@@ -77,7 +77,7 @@ Implementation requirement: a transactional outbox or equivalent durable event r
 
 ## Phase B — TOPO as context provider
 
-**Implementation status:** the first local context-provider path is working. TOPO can generate purpose-bound Context Packets through the CLI and through an authenticated loopback-only desktop endpoint.
+**Implementation status:** the first local context-provider path is working. TOPO can generate purpose-bound Context Packets through the CLI and through an authenticated loopback-only desktop endpoint. Desktop discovery does not grant access: TOPO requires explicit per-session Local app access before it advertises or serves context.
 
 The first TOPO integration should **not** import every OOS object into canonical memory.
 
@@ -139,7 +139,7 @@ First proof:
 
 The automated local smoke now proves the semantic boundary through the CLI transport: context changes generated output, does not change canonical RACK source, records provenance and excludes restricted TOPO memory by default.
 
-The desktop transport adds the human-facing form of the same flow: explicit subject/purpose, preview before use and an authenticated local request rather than direct database access.
+The desktop transport adds the human-facing form of the same flow: explicit TOPO-side permission, explicit RACK-side opt-in, subject/purpose, preview before use and an authenticated local request rather than direct database access.
 
 The remaining Phase C work is hands-on alpha use and refinement, not another architecture layer.
 

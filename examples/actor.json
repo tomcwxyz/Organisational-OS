@@ -1,0 +1,29 @@
+{
+  "id": "actor_medical_justice",
+  "type": "organisation",
+  "name": "Medical Justice",
+  "aliases": [],
+  "identifiers": [
+    {
+      "scheme": "flowlance",
+      "value": "organisation_123"
+    }
+  ],
+  "created_at": "2026-08-31T08:00:00Z",
+  "updated_at": "2026-08-31T08:00:00Z",
+  "provenance": {
+    "source_type": "application",
+    "source_id": "flowlance:organisation_123",
+    "created_by": {
+      "type": "system",
+      "id": "flowlance"
+    },
+    "method": "imported",
+    "assertion_type": "fact",
+    "confidence": "high",
+    "created_at": "2026-08-31T08:00:00Z",
+    "derived_from": [],
+    "extensions": {}
+  },
+  "extensions": {}
+}

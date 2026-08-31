@@ -25,9 +25,10 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 - conformance fixtures;
 - FlowLance Actor/Action adapter;
 - TOPO Context Packet adapter;
+- RACK ContextSource/OOS packet adapter;
 - CI test kit.
 
-**Exit test:** FlowLance exports valid OOS objects and TOPO produces a valid purpose-bound Context Packet without either changing its native domain model.
+**Exit test:** FlowLance exports valid OOS objects, TOPO produces a valid purpose-bound Context Packet, and RACK can validate/normalise that packet without any product changing its native domain model.
 
 ## 0.3 — Local interoperability
 
@@ -35,10 +36,13 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 
 - TOPO Context Packet query;
 - RACK node manifest;
-- RACK Practice mapping;
-- RACK ↔ TOPO local context exchange.
+- RACK ↔ TOPO local context exchange;
+- controlled ContextSnapshot use in a RACK execution/build path;
+- Practice granularity study rather than premature one-to-one mapping.
 
-**Exit test:** RACK requests purpose-bound organisational context from TOPO during practice execution.
+**Exit test:** RACK requests purpose-bound organisational context from TOPO during practice execution, records what context influenced the execution, and does not turn that context into canonical practice.
+
+See [RFC 0003](../rfcs/0003-practice-granularity.md).
 
 ## 0.4 — External state and memory
 

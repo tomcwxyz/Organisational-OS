@@ -23,11 +23,11 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 - TypeScript protocol package;
 - schema validation;
 - conformance fixtures;
-- FlowLance adapter;
-- TOPO ingest adapter;
+- FlowLance Actor/Action adapter;
+- TOPO Context Packet adapter;
 - CI test kit.
 
-**Exit test:** FlowLance emits a valid event and TOPO ingests it from a fixture with no direct database dependency.
+**Exit test:** FlowLance exports valid OOS objects and TOPO produces a valid purpose-bound Context Packet without either changing its native domain model.
 
 ## 0.3 — Local interoperability
 
@@ -40,7 +40,19 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 
 **Exit test:** RACK requests purpose-bound organisational context from TOPO during practice execution.
 
-## 0.4 — Federation
+## 0.4 — External state and memory
+
+**Goal:** prove authoritative external operational state can participate in organisational context without becoming canonical memory by accident.
+
+- linked external-object/event ledger in TOPO or reference implementation;
+- FlowLance fixture ingestion;
+- freshness/supersession;
+- explicit promotion-to-memory policy;
+- provenance-preserving links.
+
+**Exit test:** a FlowLance Action is available to TOPO/RACK context while remaining outside TOPO canonical Claims until explicitly promoted.
+
+## 0.5 — Federation
 
 **Goal:** cross a real cloud/local trust boundary.
 
@@ -51,9 +63,9 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 - capability discovery;
 - cursors and replay.
 
-**Exit test:** FlowLance emits an event while the local device is offline; TOPO receives it after reconnecting.
+**Exit test:** FlowLance emits an event while the local device is offline; TOPO receives it after reconnecting into the external-state layer without silently changing canonical memory.
 
-## 0.5 — Trust
+## 0.6 — Trust
 
 **Goal:** make cross-node access explicit and inspectable.
 
@@ -67,21 +79,21 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 
 **Exit test:** a node provides useful context while withholding restricted evidence, and an unauthorised action request fails safely.
 
-## 0.6 — First organisational loop
+## 0.7 — First organisational loop
 
 Connect Attention, FlowLance, TOPO and RACK.
 
-Demonstrate signal/context → attention assessment → commitment/action → memory → practice/context → outcome/history.
+Demonstrate signal/context → attention assessment → commitment/action → linked state/memory → practice/context → outcome/history.
 
-## 0.7 — TOPO shared memory
+## 0.8 — TOPO shared memory
 
 Test TOPO Sync, private/shared/published memory, managed TOPO and a self-hosted path.
 
-## 0.8 — RACK shared practice
+## 0.9 — RACK shared practice
 
 Test RACK Sync, shared practices, versioning, team governance and evaluation summaries.
 
-## 0.9 — Other lenses
+## 0.10 — Other lenses
 
 Bring in Swells, Tending, Glade and Drift through the protocol rather than bespoke point-to-point integration.
 

@@ -1,0 +1,62 @@
+name: local-alpha-smoke
+
+on:
+  pull_request:
+    paths:
+      - "scripts/smoke-local-alpha.mjs"
+      - ".github/workflows/local-alpha-smoke.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/smoke-local-alpha.mjs"
+      - ".github/workflows/local-alpha-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: local-alpha-smoke-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Organisational OS
+        uses: actions/checkout@v4
+
+      - name: Checkout TOPO
+        uses: actions/checkout@v4
+        with:
+          repository: tomcwxyz/TOPO
+          ref: main
+          path: integration/TOPO
+
+      - name: Checkout RACK
+        uses: actions/checkout@v4
+        with:
+          repository: tomcwxyz/rack
+          ref: main
+          path: integration/rack
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+
+      - name: Install TOPO dependencies
+        working-directory: integration/TOPO
+        run: npm install
+
+      - name: Install RACK dependencies
+        working-directory: integration/rack
+        run: pnpm install --frozen-lockfile
+
+      - name: Exercise TOPO → RACK local alpha
+        run: node scripts/smoke-local-alpha.mjs --topo integration/TOPO --rack integration/rack

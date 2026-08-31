@@ -75,30 +75,46 @@ Initial candidates:
 
 Implementation requirement: a transactional outbox or equivalent durable event record so an application state change and its event cannot silently diverge.
 
-## Phase B — TOPO as consumer and context provider
+## Phase B — TOPO as context provider
 
-TOPO should:
+The first TOPO integration should **not** import every OOS object into canonical memory.
 
-- ingest OOS events idempotently;
-- retain original provenance;
-- keep a per-source event cursor;
-- reconcile external identifiers with local Actors;
-- retain source authority rather than duplicating arbitrary content;
-- answer a simple structured Context request.
+TOPO should first:
+
+- answer a simple structured Context request from confirmed local memory;
+- retain claim provenance in the Context Packet;
+- enforce temporal validity and sensitivity;
+- minimise the returned context to the stated purpose;
+- preserve source references rather than copying evidence unnecessarily.
 
 First Context query:
 
 ~~~text
-subject: actor or organisation
+subject: actor, organisation or project
 purpose: CRM discovery / qualification
 wanted:
-  relationships
-  active commitments
-  recent decisions
-  relevant evidence references
+  relevant confirmed claims
+  source/evidence references
 ~~~
 
 The result is a Context Packet rather than raw TOPO storage.
+
+### External state is separate from canonical memory
+
+FlowLance Tasks and other authoritative operational Objects may later be linked into TOPO context, but they must not silently become confirmed TOPO Claims.
+
+Before broad FlowLance event ingestion, TOPO should implement a linked external-object/event ledger (or equivalent reference layer) that can retain:
+
+- source node/object identity;
+- source event/revision position;
+- provenance;
+- freshness/supersession;
+- visibility;
+- the normalised object or a source reference.
+
+A connector/review policy can then explicitly decide whether external state remains referenced, becomes evidence for an existing Claim, or proposes a new candidate Claim.
+
+See [RFC 0002](../rfcs/0002-memory-nodes-and-external-state.md).
 
 ## Phase C — RACK as practice node
 
@@ -114,7 +130,20 @@ First proof:
 
 > RACK is executing a CRM discovery practice for Actor X and can request only the relevant organisational history from TOPO.
 
-## Phase D — Relay and Bridge
+This can be proven before the relay exists because both RACK and TOPO are local-first.
+
+## Phase D — External-state ingestion
+
+Once RACK ↔ TOPO context exchange works, add the TOPO linked external-state ledger and ingest FlowLance compatibility fixtures locally.
+
+Prove that:
+
+1. FlowLance Action remains an externally authoritative Action;
+2. TOPO can use/reference it in context;
+3. the Action is not automatically a canonical Claim;
+4. promotion to a candidate Claim, where useful, is explicit and provenance-preserving.
+
+## Phase E — Relay and Bridge
 
 Build these only after local fixture-based interoperability works.
 
@@ -155,11 +184,12 @@ First federation test:
 3. relay retains it;
 4. laptop returns;
 5. Bridge resumes from its cursor;
-6. TOPO ingests event once;
+6. TOPO external-state ledger consumes the event idempotently;
 7. provenance and external identity survive;
-8. RACK can use the resulting context locally.
+8. canonical TOPO Claims remain unchanged unless promotion is explicitly requested;
+9. RACK can use the resulting linked context locally.
 
-## Phase E — Attention
+## Phase F — Attention
 
 Attention becomes the first cross-boundary consumer that tests whether the OS adds qualitative value.
 
@@ -207,6 +237,7 @@ We are done with the first proof when all of these are true:
 - the event is delivered later exactly once from the consumer's perspective;
 - provenance survives the journey;
 - identity reconciliation is explicit;
+- external operational state remains distinct from canonical memory;
 - RACK requests a purpose-bound Context Packet rather than TOPO storage;
 - local content need not be uploaded;
 - every product remains independently useful.

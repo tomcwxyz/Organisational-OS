@@ -24,29 +24,54 @@ We should use them to find flaws in the protocol before asking anybody else to i
 
 Attention joins after the basic interoperability works.
 
-## Phase A — FlowLance as producer
+## Phase A — FlowLance compatibility
 
 Do not replace FlowLance's internal domain model.
 
-Add an OOS adapter that maps existing state into shared concepts.
+Add an OOS adapter around existing state.
 
 Initial mappings to test:
 
-- client/organisation → Actor;
-- contact/client relationship → Relationship;
+- FlowLance user → Actor/person;
+- contact → Actor/person;
+- client → Actor with preserved ambiguity where FlowLance does not reliably distinguish person from organisation;
+- contact/client link → Relationship;
 - task → Action;
-- genuine obligation → Commitment;
+- genuine obligation → Commitment **only when FlowLance has explicit evidence that it is an obligation**;
 - selected recorded choice → Decision.
 
-Initial events:
+### Findings from the first schema review
+
+The real FlowLance model has already exposed three useful corrections to the draft protocol:
+
+1. **Task is Action, not Commitment.** FlowLance's existing Attention API explicitly treats those concepts as different. We should not manufacture commitments from tasks.
+2. **Actor classification can be uncertain.** A legacy/client record may not reliably tell us whether it represents a person or organisation. The OOS Actor draft therefore permits `unknown` rather than forcing an invented classification.
+3. **Deadlines may be date-only.** FlowLance tasks use a date for `dueDate`. OOS now preserves date precision rather than coercing it into an invented timestamp.
+
+This is exactly how the specification should evolve: adapters expose semantic mismatches and the shared model changes only where the mismatch is genuinely organisational rather than product-specific.
+
+### First compatibility surface
+
+Before building federation, FlowLance should be able to:
+
+- export valid Actor and Action objects;
+- expose a draft node capability manifest;
+- validate those objects against the OOS v0.1 schemas;
+- retain FlowLance IDs as external identifiers;
+- keep product-specific project/client detail in extensions rather than expanding the core ontology prematurely.
+
+### Events after object compatibility
+
+Only after the mappings are stable should FlowLance add durable events.
+
+Initial candidates:
 
 - relationship.created;
-- commitment.created;
-- commitment.fulfilled;
 - action.created;
 - action.completed;
 - action.overdue;
-- decision.made.
+- commitment.created / fulfilled once commitments are explicit;
+- decision.made once a genuine decision source exists.
 
 Implementation requirement: a transactional outbox or equivalent durable event record so an application state change and its event cannot silently diverge.
 
@@ -126,7 +151,7 @@ Responsibilities:
 First federation test:
 
 1. laptop is offline;
-2. FlowLance emits commitment.created;
+2. FlowLance emits an organisational event;
 3. relay retains it;
 4. laptop returns;
 5. Bridge resumes from its cursor;

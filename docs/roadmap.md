@@ -41,6 +41,7 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 - RACK ↔ TOPO local context exchange;
 - controlled ContextSnapshot use in a RACK execution/build path;
 - authenticated TOPO desktop discovery/context endpoint;
+- explicit per-session TOPO local-sharing consent;
 - opt-in RACK desktop context preview and build use;
 - content-stable context provenance/digest;
 - Practice granularity study rather than premature one-to-one mapping.

@@ -58,13 +58,16 @@ Current profile requirements:
 - never advertise or accept a non-loopback endpoint;
 - protect discovery credentials with user-only file permissions where the OS supports that directly;
 - authenticate every request with a high-entropy per-process token;
+- treat discovery as presence, not permission;
+- start context sharing disabled on each provider launch;
+- require explicit person-controlled consent before advertising/serving context;
 - expose capability discovery before application requests;
 - bound request/response sizes and timeouts;
 - make unavailable/stale discovery fail clearly;
 - keep the endpoint read-only unless a future capability explicitly adds stronger authority;
 - preserve the same Object/Event/Context/Action semantics as other transports.
 
-The current TOPO profile exposes Context only and fixes the disclosure ceiling to ordinary + personal memory. A client cannot request elevation to sensitive/restricted memory through this endpoint.
+The current TOPO profile exposes Context only after the person explicitly enables **Local app access** for that TOPO session, and fixes the disclosure ceiling to ordinary + personal memory. A client cannot request elevation to sensitive/restricted memory through this endpoint. Restarting TOPO revokes the session permission.
 
 This is a **local application transport**, not yet the full OOS Bridge. It is deliberately small enough to replace later with named pipes, Unix-domain sockets or another native mechanism without changing Context semantics.
 
@@ -141,6 +144,9 @@ TOPO desktop
        ▼
 RACK desktop
   capability check
+       │
+       ├── if disabled: ask person to enable
+       │   Local app access in TOPO
        │
        ▼
 preview Context Packet

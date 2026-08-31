@@ -32,12 +32,17 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 
 ## 0.3 — Local interoperability
 
+**Status:** working alpha; automated semantic proof is green, hands-on desktop pairing remains part of alpha testing.
+
 **Goal:** prove memory and practice can cooperate locally without merging products.
 
 - TOPO Context Packet query;
 - RACK node manifest;
 - RACK ↔ TOPO local context exchange;
 - controlled ContextSnapshot use in a RACK execution/build path;
+- authenticated TOPO desktop discovery/context endpoint;
+- opt-in RACK desktop context preview and build use;
+- content-stable context provenance/digest;
 - Practice granularity study rather than premature one-to-one mapping.
 
 **Exit test:** RACK requests purpose-bound organisational context from TOPO during practice execution, records what context influenced the execution, and does not turn that context into canonical practice.

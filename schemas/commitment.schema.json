@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Commitment",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "committed_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "committed_to": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "subject": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "active",
+        "fulfilled",
+        "breached",
+        "cancelled"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "related_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json"
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "statement",
+    "committed_by",
+    "created_at",
+    "status",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

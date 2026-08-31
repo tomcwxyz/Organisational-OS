@@ -1,0 +1,23 @@
+{
+  "protocol": "oos/0.1-draft",
+  "node": {
+    "id": "rack",
+    "name": "RACK",
+    "version": "0.1"
+  },
+  "provides": [
+    "practice"
+  ],
+  "emits": [
+    "practice.created",
+    "practice.updated"
+  ],
+  "accepts": [],
+  "queries": [
+    "context"
+  ],
+  "actions": [
+    "practice.execute"
+  ],
+  "extensions": {}
+}

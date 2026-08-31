@@ -41,11 +41,19 @@
       "default": []
     },
     "due_at": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "format": "date-time"
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "string",
+          "format": "date-time"
+        }
+      ]
     },
     "completed_at": {
       "type": [

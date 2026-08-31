@@ -68,6 +68,7 @@ This repository is currently **pre-alpha / specification first**. The ontology a
 - [Architecture](docs/architecture.md)
 - [First integration plan](docs/first-integration.md)
 - [Deployment model](docs/deployment.md)
+- [Transports](docs/transports.md)
 - [Trust model](docs/trust-model.md)
 - [Product boundaries](docs/product-boundaries.md)
 - [Roadmap](docs/roadmap.md)

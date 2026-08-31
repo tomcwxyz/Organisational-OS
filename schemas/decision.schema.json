@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Decision",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "statement": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_makers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "subject": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "reasoning": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "alternatives": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "assumptions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "superseded",
+        "reversed",
+        "expired"
+      ]
+    },
+    "provenance": {
+      "$ref": "provenance.schema.json"
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "id",
+    "statement",
+    "decision_makers",
+    "decided_at",
+    "status",
+    "provenance"
+  ],
+  "additionalProperties": false
+}

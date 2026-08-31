@@ -61,16 +61,29 @@ The protocol must eventually prove itself with software we did not build.
 
 This repository is currently **pre-alpha / specification first**. The ontology and protocol are expected to change as they are tested against real products.
 
-See:
+### Start here
 
+- [Conceptual blueprint](docs/conceptual-blueprint.md)
 - [Thesis](docs/thesis.md)
 - [Architecture](docs/architecture.md)
-- [Deployment](docs/deployment.md)
+- [First integration plan](docs/first-integration.md)
+- [Deployment model](docs/deployment.md)
 - [Trust model](docs/trust-model.md)
 - [Product boundaries](docs/product-boundaries.md)
+- [Roadmap](docs/roadmap.md)
+
+### Specification
+
 - [Protocol](spec/README.md)
 - [Ontology](spec/ontology/README.md)
-- [Roadmap](docs/roadmap.md)
+- [Events](spec/events/README.md)
+- [Context](spec/context/README.md)
+- [Actions](spec/actions/README.md)
+- [Identity](spec/identity/README.md)
+- [Provenance](spec/provenance/README.md)
+- [Capabilities](spec/capabilities/README.md)
+- [JSON Schemas](schemas/README.md)
+- [RFC 0001: Federated node protocol](rfcs/0001-federated-node-protocol.md)
 
 ## Principles
 

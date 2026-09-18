@@ -50,6 +50,29 @@ This roadmap is evidence-driven. Each stage exists to test an architectural clai
 
 See [RFC 0003](../rfcs/0003-practice-granularity.md).
 
+## Parallel proving track — AI runtime interoperability
+
+**Status:** experiment recorded; implementation not yet coupled.
+
+**Goal:** prove that context, practice, execution and evidence can cooperate across a real agent/project runtime without turning Organisational OS into that runtime.
+
+Use the fork `tomcwxyz/Orbital` as the first reference runtime while deliberately keeping it replaceable.
+
+- Orbital requests purpose-bound context from TOPO;
+- Orbital resolves applicable RACK practice;
+- context packet and practice identifiers survive worker delegation;
+- Orbital emits a small structured runtime event vocabulary;
+- CRUX correlates declared and observed behaviour;
+- Ship Check contributes independent implementation evidence;
+- reviewed outcomes may propose learning back to TOPO/RACK without automatic authority transfer;
+- keep Good Ship-specific runtime changes isolated and upstream-compatible where practical.
+
+**Exit test:** one real project task can be traced from TOPO context + RACK practice through Orbital execution to CRUX evidence, including a Ship Check finding where relevant, while every participating tool remains independently useful.
+
+A second exit question is deliberately architectural: after real use, can we identify concrete runtime requirements that Orbital cannot satisfy cleanly? Build a separate runtime only when that evidence exists.
+
+See [RFC 0002 — AI runtime interoperability and the Orbital experiment](../rfcs/0002-ai-runtime-interoperability.md).
+
 ## 0.4 — External state and memory
 
 **Goal:** prove authoritative external operational state can participate in organisational context without becoming canonical memory by accident.
@@ -95,6 +118,8 @@ Connect Attention, FlowLance, TOPO and RACK.
 
 Demonstrate signal/context → attention assessment → commitment/action → linked state/memory → practice/context → outcome/history.
 
+The runtime proving track should inform this loop but must not make Orbital a required component.
+
 ## 0.8 — TOPO shared memory
 
 Test TOPO Sync, private/shared/published memory, managed TOPO and a self-hosted path.
@@ -110,5 +135,7 @@ Bring in Swells, Tending, Glade and Drift through the protocol rather than bespo
 ## 1.0 — Third-party proof
 
 A non-Good-Ship tool participates meaningfully in the protocol.
+
+The Orbital experiment is an early pressure test of this requirement, but because we control the fork it does not by itself satisfy the final third-party proof criterion.
 
 This is a release criterion, not a nice-to-have.

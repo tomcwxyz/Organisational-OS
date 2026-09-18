@@ -44,8 +44,10 @@ The first implementation deliberately starts with:
 
 - **FlowLance** — cloud operational work and commitments;
 - **TOPO** — local-first organisational memory and context;
-- **RACK** — local-first organisational practice and execution;
-- **Attention** — contextual prioritisation and intervention.
+- **RACK** — local-first organisational practice;
+- **Attention** — contextual prioritisation and intervention;
+- **CRUX** — evidence and declared/observed reconciliation;
+- **Ship Check** — independent implementation inspection.
 
 The first architectural proof is:
 
@@ -55,11 +57,23 @@ The first architectural proof is:
 4. RACK requests a purpose-bound Context Packet from TOPO while executing a practice.
 5. The applications remain independently useful and do not share databases.
 
+A second proving ground now uses the fork `tomcwxyz/Orbital` as a **reference AI/project runtime**:
+
+1. Orbital requests purpose-bound context from TOPO.
+2. It resolves applicable working practice from RACK.
+3. It executes/delegates a real task while preserving context/practice lineage.
+4. It emits structured runtime events to CRUX.
+5. Ship Check contributes independent implementation evidence.
+6. CRUX reconciles declared, observed and independently inspected behaviour without becoming the runtime.
+7. Evidence may inform reviewable learning in TOPO or RACK, but never rewrites either automatically.
+
+Orbital is a proving runtime, not a mandatory OOS component. The experiment exists to discover whether an existing runtime is sufficient and, if not, what a future runtime would genuinely need.
+
 The protocol must eventually prove itself with software we did not build.
 
 ## Repository status
 
-This repository is currently **pre-alpha / specification first**. The ontology and protocol are expected to change as they are tested against real products.
+This repository is currently **pre-alpha / specification first**. The ontology and protocol are expected to change as they are tested against real products and runtimes.
 
 ### Start here
 
@@ -85,6 +99,7 @@ This repository is currently **pre-alpha / specification first**. The ontology a
 - [Capabilities](spec/capabilities/README.md)
 - [JSON Schemas](schemas/README.md)
 - [RFC 0001: Federated node protocol](rfcs/0001-federated-node-protocol.md)
+- [RFC 0002: AI runtime interoperability and the Orbital experiment](rfcs/0002-ai-runtime-interoperability.md)
 
 ## Principles
 
